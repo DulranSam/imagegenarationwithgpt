@@ -13,8 +13,8 @@ export default function App() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await Axios.post("http://localhost:8000/main", {
-        data: { image: search },
+      const response = await Axios.get("http://localhost:8000/main", {
+        params: { image: search },
       });
       setImages(response.data);
     } catch (error) {
@@ -34,10 +34,15 @@ export default function App() {
           type="text"
           placeholder="Search for image"
         />
-        <span>Select Number of images to Generate</span>
+        <p>Select Number of images to Generate</p>
 
-        <img src={images.map((x) => x.url)} alt=""></img>
-        <p>{status !== "" ? status : ""}</p>
+        {images.length === 0 ? (
+          <p>No results found</p>
+        ) : (
+          images.map((x, index) => <img key={index} src={x.url || ""} alt="" />)
+        )}
+
+        <p>{status === "" ? "" : status}</p>
         <button type="submit">
           {loading ? "Loading..." : "Generate Image"}
         </button>
