@@ -13,7 +13,7 @@ export default function App() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await Axios.get("http://localhost:8000/main", {
+      const response = await Axios.post("http://localhost:8000/main", {
         params: { image: search },
       });
       setImages(response.data);
